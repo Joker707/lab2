@@ -239,6 +239,8 @@ __Листинг 2.3__ mcc/mnc.xml
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     
+Ну и вот обещанный скриншот!!
+![](https://github.com/Joker707/lab2/blob/master/app/mcc.png)
 
 ## Задача 3 - Best-matching resource
 
