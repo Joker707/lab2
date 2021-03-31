@@ -144,6 +144,16 @@ __Листинг 1.3__
 Российский ли это оператор связи.
 Что-то мне в глубине души подсказывает, что от меня хотели не совсем этот гениальный мув....
 
+__UPD:__
+Я все-таки понял, как мне это сделать с подсказки от Артёма Олеговича(да, не прошло и пол года)
+пусть у нас будет обычный layout для mcc/mnc, который мы и создали в прошлый раз
+Он будет выдаваться по дефолту
+А ещё добавлю второй layout для mcc-310/mcn-260(дефолтные значения у моего эмулятора)
+И у нас происходит магия!
+Запускается не дефолтный layout, а альтернативный!
+
+Ниже приведены листинги и под ними будет скрин
+
 
 __Листинг 2.1__
 
@@ -175,45 +185,60 @@ __Листинг 2.1__
     
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-Переписал немного __MainActivity__:
 __Листинг 2.2__
 
-    package com.example.lab2
-    
-    import android.content.Context
-    import android.os.Bundle
-    import android.telephony.TelephonyManager
-    import androidx.appcompat.app.AppCompatActivity
-    import kotlinx.android.synthetic.main.activity_main2.*
-    
-    
     class MainActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main2)
-            mcc_mcn()
+    //        mcc_mcn()
         }
     
-        fun mcc_mcn() {
-            var mcc = 0
-            var mnc = 0
-            val tel = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            val networkOperator = tel.networkOperator
-    
-            if (networkOperator == "") {
-                mcc_mnc.text = "INSERT YOUR SIM"
-            } else {
-                mcc = networkOperator.substring(0, 3).toInt()
-                mnc = networkOperator.substring(3).toInt()
-                mcc_mnc.text = "MCC: " + mcc + " MNC: " + mnc
-                if (mcc != 250) {
-                    where_you_are.text = "Russia is missing you, mate!"
-                } else {
-                    where_you_are.text = "You are at home, mate!"
-                }
-            }
-        }
+    //    fun mcc_mcn() {
+    //        var mcc = 0
+    //        var mnc = 0
+    //        val tel = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    //        val networkOperator = tel.networkOperator
+    //
+    //        if (networkOperator == "") {
+    //            mcc_mnc.text = "INSERT YOUR SIM"
+    //        } else {
+    //            mcc = networkOperator.substring(0, 3).toInt()
+    //            mnc = networkOperator.substring(3).toInt()
+    //            mcc_mnc.text = "MCC: " + mcc + " MNC: " + mnc
+    //            if (mcc != 250) {
+    //                where_you_are.text = "Russia is missing you, mate!"
+    //            } else {
+    //                where_you_are.text = "You are at home, mate!"
+    //            }
+    //        }
+    //    }
     }
+    
+    
+__Листинг 2.3__ mcc/mnc.xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+    
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mcc_310_mnc_260"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    
 
 ## Задача 3 - Best-matching resource
 
@@ -317,10 +342,10 @@ __~~hdpi~~__
 
 ## Вывод
 
-Затраченное время на выполнение работы и составление отчета - 6 часов.
+Затраченное время на выполнение работы и составление отчета - 8 часов(с учетом испралвения 2 задания).
 
 Так как я совместил выполнение 1 и 4 пунктов, то время немного сэкономилось.
-Сидел и долго думал, как мне вообще что-то написать для MCC/MNC. В итоге решил просто выводить
-эти циферки на экран и выводить информацию, Российские это номера или нет....
-Сомнительная, конечно, штука для альтернативных ресурсов, поэтому, видимо, это неправильно :)
+Слава Богу, что я все-таки смог нормально разобраться, как создавать эти ресурсы, перед этим попртив несколько папок в проекте
+Но я все-таки решил оставить тот свой код в активити!
+Лишним не будет, я им тоже горд!!
 На Task3 потратил минут 30, но зато сразу вносил всё в отчет.
